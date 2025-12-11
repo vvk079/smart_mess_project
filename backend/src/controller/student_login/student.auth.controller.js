@@ -36,7 +36,7 @@ async function registerstudent(req,res) {
     const student = await studentmodel.create({
          fullName,
     email,
-    password,
+    password:hasded,
     rollNo,
     course,
     batch,
@@ -72,15 +72,18 @@ async function loginStudent(req,res) {
     })
 
     if(!student){
-        res.status(401).json({
+       return res.status(401).json({
             message:"student is not existed"
         })
     }
+     if (!student.password) {
+            return res.status(500).json({ message: "password not stored in DB" });
+        }
 
     const ispasswordvalid = await bcrypt.compare(password,student.password)
 
     if(!ispasswordvalid){
-        res.status(402).json({
+       return res.status(402).json({
             message:"password is not valid"
         })
     }
@@ -96,7 +99,7 @@ async function loginStudent(req,res) {
 
     })
 
-    res.status(200).json({
+    return res.status(200).json({
         message:"login sucessfull"
     })
 

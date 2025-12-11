@@ -15,7 +15,9 @@ app.get("/",(req,res)=>{
 
 
 
-app.use("/api/user",authroutes)
+app.use("/api/auth/user",authroutes)
+app.use("/api/admin",authroutes)
+app.use("/api/user")
 
 
 
