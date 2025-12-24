@@ -92,8 +92,19 @@ async function loginadmin(req,res){
     })
 }
 
+async function logoutadmin(req, res) {
+    res.clearCookie("token", {
+        httpOnly: true,
+    });
+
+    return res.status(200).json({
+        message: "Logout successful"
+    });
+}
+
 
 module.exports={
     registerAdmin,
-    loginadmin
+    loginadmin,
+    logoutadmin,
 }

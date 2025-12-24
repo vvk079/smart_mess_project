@@ -107,8 +107,20 @@ async function loginStudent(req,res) {
     
 }
 
+async function logoutStudent(req, res) {
+    res.clearCookie("token", {
+        httpOnly: true,
+    });
+
+    return res.status(200).json({
+        message: "Logout successful"
+    });
+}
+
+
 
 module.exports ={
     registerstudent,
-    loginStudent
+    loginStudent,
+    logoutStudent,
 }

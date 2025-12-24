@@ -1,45 +1,33 @@
-const studentmodel = require('../models/Students.model.js')
+const studentModel = require('../models/Students.model');
+const jwt = require('jsonwebtoken');
 
-const jwt = require('jsonwebtoken')
+async function authStudentMiddleware(req, res, next) {
+  const token = req.cookies.token;
 
+  if (!token) {
+    return res.status(401).json({
+      message: "Please login first"
+    });
+  }
 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-
-async function authstudentmiddleware (req,res,next){
-
-    const token = req.cookies.token;
-
-    if(!token){
-        return res.status(402).json({
-            message:"please login first"
-        })
+    const student = await studentModel.findById(decoded.id);
+    if (!student) {
+      return res.status(401).json({
+        message: "Student not found"
+      });
     }
 
+    req.student = student;
+    next();
 
-    try {
-
-        const decoded = jwt.verify(token,process.env.JWT_SECRET)
-        const student = await studentmodel.findOne(decoded._id)
-
-        if(!student){
-            return res.status(401).json({
-                message:"Student not found"
-            })
-        }
-
-        req.student=student;
-        next()
-        
-    } catch (error) {
-        return res.status(403).json({
-            message:"invalid token"
-        })
-
-        
-    }
-
-        
+  } catch (error) {
+    return res.status(403).json({
+      message: "Invalid or expired token"
+    });
+  }
 }
 
-
-module.exports=authstudentmiddleware;
+module.exports = authStudentMiddleware;

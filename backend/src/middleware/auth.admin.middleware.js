@@ -1,41 +1,33 @@
-const adminModel = require('../models/admin.model.js')
-const jwt = require('jsonwebtoken')
+const adminModel = require('../models/admin.model');
+const jwt = require('jsonwebtoken');
 
+async function authAdminMiddleware(req, res, next) {
+  const token = req.cookies.token;
 
+  if (!token) {
+    return res.status(401).json({
+      message: "Please login first"
+    });
+  }
 
-async function authAdminMiddleWre(req,res,next){
-    const token = req.cookie.token
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if(!token){
-        return res.status(501).json({
-            message:"please login first"
-        })
+    const admin = await adminModel.findById(decoded.id);
+    if (!admin) {
+      return res.status(401).json({
+        message: "Admin not found"
+      });
     }
-   
-    
 
-   try{
-    const decoded = jwt.verify(token,process.envJWT_SECRET)
-    const admin = adminModel.findOne(decoded.id)
+    req.admin = admin;
+    next();
 
-    if(!admin){
-        return res.status(502).json({
-            message:"user not found"
-        })
-    }
-    req.admin=admin
-    next()
-
-
-
-   }catch(err){
-    return res.status(506).json({
-        message:"invalid token "
-    })
-
-   }
-
+  } catch (error) {
+    return res.status(403).json({
+      message: "Invalid or expired token"
+    });
+  }
 }
 
-
-module.exports=authAdminMiddleWre
+module.exports = authAdminMiddleware;

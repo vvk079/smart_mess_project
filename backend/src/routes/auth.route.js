@@ -1,20 +1,19 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const authstudent = require('../controller/student_login/student.auth.controller')
-const authadmin = require('../controller/admin/admin.auth.controller')
-
-
-router.post("/student/register",authstudent.registerstudent)
-router.post("/student/login",authstudent.loginStudent)
-router.post("/admin/register",authadmin.registerAdmin)
-router.post("/admin/login",authadmin.loginadmin)
+// middlewares
 
 
 
 
 
+//  AUTH 
+router.post("/student/register", studentAuthController.registerstudent);
+router.post("/student/login", studentAuthController.loginStudent);
+router.post("/student/logout", studentAuthController.logoutStudent);
 
+router.post("/admin/register", adminAuthController.registerAdmin);
+router.post("/admin/login", adminAuthController.loginadmin);
+router.post("/admin/logout", adminAuthController.logoutadmin);
 
-module.exports=router
 
