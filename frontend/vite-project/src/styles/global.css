@@ -1,0 +1,28 @@
+:root {
+  --bg-start: #feccb1;
+  --bg-end: #ef842c;
+
+  --card-bg: #fdc5c5;
+
+  --primary: #ff9f68;
+  --primary-dark: #f28c52;
+
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  
+  color: var(--text-dark);
+}

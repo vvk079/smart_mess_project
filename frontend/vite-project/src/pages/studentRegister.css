@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #1f2937, #020617);
+}
+
+.register-card {
+  width: 880px;
+  padding: 50px 60px;
+  border-radius: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.04)
+  );
+  backdrop-filter: blur(18px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.register-card h2 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.register-card h2 span {
+  color: #34d399;
+}
+
+.register-card p {
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.input-group label {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.input-group input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 26px 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.register-btn {
+  width: 260px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #34d399;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  background: #10b981;
+}
+
+.login-text {
+  margin-top: 22px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.login-text a {
+  color: #34d399;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .register-card {
+    width: 90%;
+    padding: 40px 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
