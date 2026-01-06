@@ -108,24 +108,24 @@ const PaymentContent = () => {
                     <SidebarMenuItem icon={HelpCircle}>Help Center</SidebarMenuItem>
                     <SidebarMenuItem icon={MessageCircle}>Live Chat</SidebarMenuItem>
                     <SidebarMenuItem icon={LogOut} onClick={() => {
-                        api.post('/auth/student/logout').then(() => window.location.href = '/login');
+                        api.post('/auth/student/logout').then(() => window.location.href = '/');
                     }}>Sign Out</SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContainer>
 
-            <div style={{ padding: '40px', paddingLeft: '100px', maxWidth: '1000px', margin: '0 auto' }}>
+            <div className="lw-mobile-padding-sm" style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
                 <div className="lw-slide-up">
-                    <h1 style={{ fontSize: '2.5rem', fontWeight: '800', color: '#333', marginBottom: '8px' }}>Payments & Billing 💳</h1>
-                    <p style={{ color: '#666', fontSize: '1.1rem', marginBottom: '40px' }}>View and settle your monthly mess dues.</p>
+                    <h1 style={{ fontSize: '2rem', fontWeight: '800', color: '#333', marginBottom: '4px' }}>Payments & Billing 💳</h1>
+                    <p style={{ color: '#666', fontSize: '1rem', marginBottom: '24px' }}>View and settle your monthly mess dues.</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '30px' }}>
+                <div className="lw-mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '20px' }}>
 
                     {/* Left: Invoice */}
-                    <Card className="lw-slide-up lw-delay-100" style={{ padding: '40px', background: 'white' }}>
+                    <Card className="lw-slide-up lw-delay-100 lw-card-compact" style={{ background: 'white' }}>
 
                         {/* Status Badge */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                             <div>
                                 <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '4px' }}>Invoice #INV-2026-001</h3>
                                 <div style={{ color: '#888', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -145,7 +145,7 @@ const PaymentContent = () => {
 
                         {/* Bill Items */}
                         <div style={{ marginBottom: '30px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '12px 0', borderBottom: '1px solid #eee', color: '#888', fontSize: '0.85rem', fontWeight: '600' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '12px 0', borderBottom: '1px solid #eee', color: '#888', fontSize: '0.8rem', fontWeight: '600' }}>
                                 <div>ITEM</div>
                                 <div style={{ textAlign: 'center' }}>DAYS</div>
                                 <div style={{ textAlign: 'center' }}>RATE</div>
@@ -233,7 +233,7 @@ const Payment = () => (
 );
 
 const BillRow = ({ label, days, rate, total }) => (
-    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '16px 0', borderBottom: '1px solid #f9f9f9', fontSize: '0.95rem', color: '#333' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '12px 0', borderBottom: '1px solid #f9f9f9', fontSize: '0.8rem', color: '#333' }}>
         <div style={{ fontWeight: '500' }}>{label}</div>
         <div style={{ textAlign: 'center', color: '#666' }}>{days}</div>
         <div style={{ textAlign: 'center', color: '#666' }}>₹{rate}</div>

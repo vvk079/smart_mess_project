@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, ClipboardList, Utensils, User, CreditCard } from 'lucide-react';
 import '../styles/lightswind.css';
 
-const Navbar = () => {
+const Navbar = ({ isDemo = false }) => {
   const location = useLocation();
   const path = location.pathname;
 
@@ -11,39 +11,53 @@ const Navbar = () => {
 
   const navStyle = {
     position: 'fixed',
-    bottom: '24px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '95%',
-    maxWidth: '500px', /* Increased max-width */
-    height: '80px', /* Increased height */
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(16px)',
-    borderRadius: '50px',
+    bottom: '20px',
+    left: '0',
+    right: '0',
+    margin: '0 auto',
+    width: '90%',
+    maxWidth: '420px',
+    height: '64px',
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+    backdropFilter: 'blur(20px)',
+    borderRadius: '32px',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    zIndex: 1000,
-    boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
+    zIndex: 2000,
+    boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
     border: '1px solid rgba(255,255,255,0.8)',
-    padding: '0 20px'
+    padding: '0 8px',
+    overflow: 'hidden'
   };
 
-  const NavItem = ({ to, icon: Icon, label }) => {
+  const NavItem = ({ to, icon: Icon }) => {
     const isActive = path === to;
+    const navigate = useNavigate();
+
+    const handleClick = (e) => {
+      if (isDemo && to === '/payment') {
+        e.preventDefault();
+        navigate('/login');
+      }
+    };
 
     return (
       <Link
         to={to}
+        onClick={handleClick}
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '4px',
+          gap: '2px',
           color: isActive ? 'var(--col-primary)' : '#999',
           position: 'relative',
-          padding: '10px',
-          width: '60px'
+          padding: '8px',
+          flex: 1,
+          minWidth: 0,
+          textDecoration: 'none',
+          transition: 'all 0.2s ease'
         }}
         className="lw-btn-hover"
       >
@@ -51,16 +65,16 @@ const Navbar = () => {
           position: 'relative',
           zIndex: 2,
           transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-          transform: isActive ? 'scale(1.1) translateY(-5px)' : 'scale(1)',
+          transform: isActive ? 'scale(1.1) translateY(-3px)' : 'scale(1)',
         }}>
-          <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+          <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
         </div>
 
         {isActive && (
           <span
             className="lw-fade-in"
             style={{
-              position: 'absolute', bottom: '8px', width: '4px', height: '4px',
+              position: 'absolute', bottom: '6px', width: '4px', height: '4px',
               borderRadius: '50%', background: 'var(--col-primary)'
             }}
           ></span>
@@ -70,23 +84,21 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <nav style={navStyle} className="lw-slide-up">
-        {path === '/' ? (
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center', width: '100%', padding: '0 20px', justifyContent: 'center' }}>
-            <span style={{ color: '#888', fontSize: '0.9rem' }}>Please <Link to="/login" style={{ color: 'var(--col-primary)', fontWeight: 'bold' }}>Login</Link> to view dashboard</span>
-          </div>
-        ) : (
-          <>
-            <NavItem to="/dashboard" icon={Home} label="Home" />
-            <NavItem to="/menu" icon={Utensils} label="Menu" />
-            <NavItem to="/attendance" icon={ClipboardList} label="Presence" />
-            <NavItem to="/payment" icon={CreditCard} label="Pay" />
-            <NavItem to="/profile" icon={User} label="Profile" />
-          </>
-        )}
-      </nav>
-    </>
+    <nav style={navStyle} className="lw-slide-up">
+      {path === '/' ? (
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', width: '100%', padding: '0 10px', justifyContent: 'center', textAlign: 'center' }}>
+          <span style={{ color: '#888', fontSize: '0.8rem' }}>Please <Link to="/login" style={{ color: 'var(--col-primary)', fontWeight: 'bold' }}>Login</Link> to view dashboard</span>
+        </div>
+      ) : (
+        <>
+          <NavItem to="/dashboard" icon={Home} />
+          <NavItem to="/menu" icon={Utensils} />
+          <NavItem to="/attendance" icon={ClipboardList} />
+          <NavItem to="/payment" icon={CreditCard} />
+          <NavItem to="/profile" icon={User} />
+        </>
+      )}
+    </nav>
   );
 };
 

@@ -44,7 +44,13 @@ export function SidebarContainer({ children }) {
                         exit={{ opacity: 0, scale: 0.95, y: -20, x: 20 }}
                         transition={{ type: "spring", duration: 0.5 }}
                         className="sidebar-container"
-                        style={{ position: 'absolute', top: '70px', right: '20px' }} // Positioning relative to header
+                        style={{
+                            position: 'absolute',
+                            top: '70px',
+                            right: '20px',
+                            maxWidth: 'calc(100vw - 40px)',
+                            zIndex: 1001
+                        }} // Positioning relative to header
                     >
                         {children}
                     </motion.div>

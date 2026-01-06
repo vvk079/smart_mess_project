@@ -66,6 +66,7 @@ const Login = () => {
                     transform: 'rotate(15deg)',
                     pointerEvents: 'none'
                 }}
+                className="lw-mobile-hide"
             />
             <img
                 src="/mess-building.png"
@@ -79,9 +80,10 @@ const Login = () => {
                     transform: 'rotate(-5deg)',
                     pointerEvents: 'none'
                 }}
+                className="lw-mobile-hide"
             />
 
-            <Card className="lw-scale-in" style={{ width: '100%', maxWidth: '750px', padding: '60px', position: 'relative', zIndex: 1, boxShadow: '0 20px 60px rgba(0,0,0,0.08)' }}>
+            <Card className="lw-scale-in lw-mobile-padding-sm" style={{ width: '100%', maxWidth: '600px', padding: '60px', position: 'relative', zIndex: 1, boxShadow: '0 20px 60px rgba(0,0,0,0.08)' }}>
                 <div style={{ textAlign: 'center', marginBottom: '40px' }}>
                     <h2 style={{ fontSize: '2.5rem', color: '#333', marginBottom: '12px', fontWeight: '800' }}>Welcome Back</h2>
                     <p style={{ color: '#666', fontSize: '1.1rem' }}>Please sign in to continue</p>

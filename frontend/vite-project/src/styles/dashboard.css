@@ -24,6 +24,49 @@
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.8rem !important;
+    }
+
+    .welcome-text {
+        font-size: 1.6rem !important;
+    }
+
+    .welcome-subtext {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 16px;
+    }
+
+    .bento-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .meals-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 400px) {
+    .dashboard-container {
+        padding: 8px;
+    }
+
+    .bento-card {
+        padding: 12px;
+    }
 }
 
 /* Card Common Style */
@@ -44,14 +87,13 @@
 }
 
 .meal-status-card {
-    padding: 24px;
-    border-radius: 24px;
-    /* More rounded */
+    padding: 16px;
+    border-radius: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 170px;
+    min-height: 140px;
 }
 
 /* Specific pastel colors from image */
@@ -98,11 +140,11 @@
 .menu-pill {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
+    gap: 12px;
+    padding: 12px 16px;
     background: white;
     border: 1px solid #f5f5f5;
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     transition: transform 0.2s;
 }
@@ -113,14 +155,26 @@
 }
 
 /* Attendance Widget (Right Side Large Card) */
-.attendance-full-card {
+.attendance-info-wrap {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 20px;
 }
 
+@media (max-width: 640px) {
+    .attendance-info-wrap {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .attendance-full-card {
+        width: 100%;
+    }
+}
+
 .attendance-progress-row {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .progress-track {

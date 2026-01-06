@@ -19,6 +19,7 @@ const Dashboard = () => {
     const { setExpanded } = useSidebar();
     const [user, setUser] = React.useState(null);
     const [bookings, setBookings] = React.useState([]);
+    const [attendanceSummary, setAttendanceSummary] = React.useState({ Breakfast: 0, Lunch: 0, Dinner: 0, Total: 0 });
     const [voteCounts, setVoteCounts] = React.useState({});
     const [myVote, setMyVote] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
@@ -27,16 +28,18 @@ const Dashboard = () => {
 
     const fetchData = async () => {
         try {
-            const [profileRes, bookingRes, voteCountRes, myVoteRes] = await Promise.all([
+            const [profileRes, bookingRes, voteCountRes, myVoteRes, attendanceRes] = await Promise.all([
                 api.get('/user/profile'),
                 api.get('/user/booking/my'),
                 api.get('/vote/counts'),
-                api.get('/vote/my')
+                api.get('/vote/my'),
+                api.get('/user/attendance/summary')
             ]);
             setUser(profileRes.data);
             setBookings(bookingRes.data.bookings || []);
             setVoteCounts(voteCountRes.data.voteCounts || {});
             setMyVote(myVoteRes.data.vote?.mealOption || null);
+            setAttendanceSummary(attendanceRes.data || { Breakfast: 0, Lunch: 0, Dinner: 0, Total: 0 });
         } catch (err) {
             console.error("Failed to fetch data", err);
         } finally {
@@ -56,10 +59,9 @@ const Dashboard = () => {
                 date: today,
                 mealType
             });
-            // Refresh bookings
-            const res = await api.get('/user/booking/my');
-            setBookings(res.data.bookings || []);
-            alert(`${mealType} booked successfully!`);
+            // Refresh data
+            fetchData();
+            alert(`${mealType} booked and attendance marked!`);
         } catch (err) {
             alert(err.response?.data?.message || `Failed to book ${mealType}`);
         } finally {
@@ -131,7 +133,7 @@ const Dashboard = () => {
                     <SidebarMenuItem icon={HelpCircle}>Help Center</SidebarMenuItem>
                     <SidebarMenuItem icon={MessageCircle}>Live Chat</SidebarMenuItem>
                     <SidebarMenuItem icon={LogOut} onClick={() => {
-                        api.post('/auth/student/logout').then(() => window.location.href = '/login');
+                        api.post('/auth/student/logout').then(() => window.location.href = '/');
                     }}>Sign Out</SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContainer>
@@ -139,10 +141,10 @@ const Dashboard = () => {
             <div className="dashboard-container" style={{ position: 'relative', zIndex: 1 }}>
 
                 {/* Header */}
-                <div className="dashboard-header lw-slide-up">
-                    <div style={{ maxWidth: '60%' }}>
-                        <h1 style={{ fontSize: '2.5rem', color: '#333', marginBottom: '8px', fontWeight: '800' }}>Welcome, {user?.fullName?.split(' ')[0] || 'Student'} 👋</h1>
-                        <p style={{ color: '#666', fontSize: '1.2rem' }}>Here's your mess overview</p>
+                <div className="dashboard-header lw-slide-up lw-mobile-padding-sm" style={{ flexWrap: 'wrap', gap: '10px' }}>
+                    <div style={{ flex: 1, minWidth: '280px' }}>
+                        <h1 className="welcome-text" style={{ fontSize: '2rem', color: '#333', marginBottom: '4px', fontWeight: '800' }}>Welcome, {user?.fullName?.split(' ')[0] || 'Student'} 👋</h1>
+                        <p className="welcome-subtext" style={{ color: '#666', fontSize: '1rem' }}>Here's your mess overview</p>
                     </div>
                     <button
                         onClick={() => setExpanded(e => !e)}
@@ -161,7 +163,7 @@ const Dashboard = () => {
                     <div className="lw-slide-up lw-delay-100">
                         {/* 1. Today's Meals */}
                         <div className="bento-card">
-                            <h3 style={{ marginBottom: '24px', color: '#444', fontSize: '1.4rem', fontWeight: '700' }}>Today's Meals</h3>
+                            <h3 style={{ marginBottom: '16px', color: '#444', fontSize: '1.2rem', fontWeight: '700' }}>Today's Meals</h3>
                             <div className="meals-row">
                                 <MealCard
                                     type="Breakfast"
@@ -189,13 +191,13 @@ const Dashboard = () => {
 
                         {/* 2. Attendance List (Sub-grid layout) */}
                         <div className="bento-card">
-                            <h3 style={{ marginBottom: '24px', color: '#444', fontSize: '1.4rem', fontWeight: '700' }}>Attendance</h3>
+                            <h3 style={{ marginBottom: '16px', color: '#444', fontSize: '1.2rem', fontWeight: '700' }}>Attendance</h3>
 
                             {/* Row of stats */}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '30px' }}>
-                                <AttendanceBlock meal="Breakfast" status={isBooked('Breakfast') ? 'Booked' : 'Absent'} count="0/30" check={isBooked('Breakfast')} />
-                                <AttendanceBlock meal="Lunch" status={isBooked('Lunch') ? 'Booked' : 'Absent'} count="0/30" check={isBooked('Lunch')} />
-                                <AttendanceBlock meal="Dinner" status={isBooked('Dinner') ? 'Booked' : 'Absent'} count="0/30" check={isBooked('Dinner')} />
+                            <div className="lw-mobile-stack" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '30px' }}>
+                                <AttendanceBlock meal="Breakfast" status={isBooked('Breakfast') ? 'Booked' : 'Absent'} count={`${attendanceSummary.Breakfast}/31`} check={isBooked('Breakfast')} />
+                                <AttendanceBlock meal="Lunch" status={isBooked('Lunch') ? 'Booked' : 'Absent'} count={`${attendanceSummary.Lunch}/31`} check={isBooked('Lunch')} />
+                                <AttendanceBlock meal="Dinner" status={isBooked('Dinner') ? 'Booked' : 'Absent'} count={`${attendanceSummary.Dinner}/31`} check={isBooked('Dinner')} />
                             </div>
 
                             {/* Menu List */}
@@ -211,27 +213,27 @@ const Dashboard = () => {
                     <div className="lw-slide-up lw-delay-200" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
                         {/* 3. Attendance Widget */}
                         <div className="bento-card">
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                                <h3 style={{ color: '#444', fontSize: '1.4rem', fontWeight: '700', margin: 0 }}>Attendance</h3>
-                                <div style={{ fontSize: '0.8rem', color: '#888', background: '#F5F5F5', padding: '4px 12px', borderRadius: '20px' }}>This Month: 0%</div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                                <h3 style={{ color: '#444', fontSize: '1.2rem', fontWeight: '700', margin: 0 }}>Attendance</h3>
+                                <div style={{ fontSize: '0.8rem', color: '#888', background: '#F5F5F5', padding: '4px 12px', borderRadius: '20px' }}>This Month: {Math.round((attendanceSummary.Total / 93) * 100)}%</div>
                             </div>
 
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                            <div className="attendance-info-wrap">
                                 {/* Progress Bars */}
-                                <div className="attendance-full-card" style={{ flex: 1 }}>
-                                    <ProgressRow label="Breakfast" percent={0} color="#AED581" />
-                                    <ProgressRow label="Lunch" percent={0} color="#64B5F6" />
-                                    <ProgressRow label="Dinner" percent={0} color="#E57373" />
+                                <div className="attendance-full-card">
+                                    <ProgressRow label="Breakfast" percent={Math.round((attendanceSummary.Breakfast / 31) * 100)} color="#AED581" />
+                                    <ProgressRow label="Lunch" percent={Math.round((attendanceSummary.Lunch / 31) * 100)} color="#64B5F6" />
+                                    <ProgressRow label="Dinner" percent={Math.round((attendanceSummary.Dinner / 31) * 100)} color="#E57373" />
                                 </div>
 
                                 {/* Chart */}
                                 <div className="circular-chart" style={{ width: '130px', height: '130px', flexShrink: 0 }}>
                                     <svg viewBox="0 0 36 36" className="circular-chart-svg">
                                         <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f5f5f5" strokeWidth="2.5" />
-                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FFA726" strokeWidth="2.5" strokeDasharray="0, 100" strokeLinecap="round" />
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FFA726" strokeWidth="2.5" strokeDasharray={`${Math.round((attendanceSummary.Total / 93) * 100)}, 100`} strokeLinecap="round" />
                                     </svg>
                                     <div className="chart-overlay">
-                                        <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#333' }}>0/90</div>
+                                        <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#333' }}>{attendanceSummary.Total}/93</div>
                                         <div style={{ fontSize: '0.7rem', color: '#888', fontWeight: '600' }}>Meals</div>
                                     </div>
                                 </div>
@@ -240,8 +242,8 @@ const Dashboard = () => {
 
                         {/* 4. Voting Widget */}
                         <div className="bento-card">
-                            <h3 style={{ color: '#444', marginBottom: '4px', fontSize: '1.4rem', fontWeight: '700' }}>Meal Voting</h3>
-                            <p style={{ fontSize: '0.85rem', color: '#888', marginBottom: '24px' }}>Vote for Tomorrow's Dinner</p>
+                            <h3 style={{ color: '#444', marginBottom: '2px', fontSize: '1.2rem', fontWeight: '700' }}>Meal Voting</h3>
+                            <p style={{ fontSize: '0.8rem', color: '#888', marginBottom: '16px' }}>Vote for Tomorrow's Dinner</p>
 
                             <VoteItem
                                 name="Chole Bhature"
@@ -281,7 +283,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <Navbar />
+            <Navbar isDemo={!user} />
         </div>
     );
 };
@@ -341,7 +343,8 @@ const VoteItem = ({ name, stats, color, active, onClick, disabled }) => (
             borderRadius: '12px',
             transition: 'all 0.2s ease',
             background: active ? `${color}15` : 'transparent',
-            border: active ? `1px solid ${color}50` : '1px solid transparent'
+            border: active ? `1px solid ${color}50` : '1px solid transparent',
+            overflow: 'hidden'
         }}
     >
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', marginBottom: '8px' }}>

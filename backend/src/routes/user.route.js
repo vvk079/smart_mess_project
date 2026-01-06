@@ -65,6 +65,12 @@ router.get(
   attendanceStudentController.viewMyAttendance
 );
 
+router.get(
+  "/attendance/summary",
+  authStudentMiddleware,
+  attendanceStudentController.viewMyAttendanceSummary
+);
+
 
 
 module.exports = router

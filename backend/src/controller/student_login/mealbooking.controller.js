@@ -1,6 +1,6 @@
 const MealBooking = require("../../models/MealBooking.model");
 const DailyMenu = require("../../models/DailyMenu.model");
-const isBeforeCutoff = require("../../utills/cutoff.util");
+const Attendance = require("../../models/Attendance.model");
 
 async function bookMeal(req, res) {
   const { date, mealType } = req.body;
@@ -19,32 +19,23 @@ async function bookMeal(req, res) {
     });
   }
 
-  if (!isBeforeCutoff(mealType)) {
-    return res.status(400).json({
-      message: `Cutoff time for ${mealType} booking has passed`
-    });
-  }
-
-  const menu = await DailyMenu.findOne({
-    date,
-    type: mealType,
-    isActive: true
-  });
-
-  if (!menu) {
-    return res.status(400).json({
-      message: `Menu not available for ${mealType} on ${date}`
-    });
-  }
-
+  // Booking created regardless of menu existence as per simplified requirement
   const booking = await MealBooking.create({
     studentId,
     date,
     mealType
   });
 
+  // Automatically mark as Present (Attendance)
+  await Attendance.create({
+    studentId,
+    date: new Date(date),
+    mealType,
+    status: "Present"
+  });
+
   res.status(201).json({
-    message: "Meal booked successfully",
+    message: "Meal booked and attendance marked successfully",
     booking
   });
 }

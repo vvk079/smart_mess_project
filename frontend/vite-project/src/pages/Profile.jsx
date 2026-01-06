@@ -30,29 +30,29 @@ const Profile = () => {
 
     return (
         <div style={{ paddingBottom: '90px', minHeight: '100vh', background: '#F9FAFB' }}>
-            <div style={{ padding: '40px 20px 20px', background: 'linear-gradient(180deg, #E0F2FE 0%, rgba(249, 250, 251, 0) 100%)', textAlign: 'center' }}>
+            <div style={{ padding: '24px 20px 16px', background: 'linear-gradient(180deg, #E0F2FE 0%, rgba(249, 250, 251, 0) 100%)', textAlign: 'center' }}>
                 <div className="lw-scale-in" style={{
-                    width: '100px', height: '100px', borderRadius: '50%', background: 'white',
-                    margin: '0 auto 16px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: '80px', height: '80px', borderRadius: '50%', background: 'white',
+                    margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.05)', border: '4px solid white'
                 }}>
-                    <User size={48} color="#0EA5E9" />
+                    <User size={40} color="#0EA5E9" />
                 </div>
-                <h2 className="lw-slide-up" style={{ fontSize: '1.5rem', fontWeight: '800', color: '#1F2937' }}>{user?.fullName || 'Student'}</h2>
+                <h2 className="lw-slide-up" style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1F2937' }}>{user?.fullName || 'Student'}</h2>
                 <div className="lw-slide-up lw-delay-100" style={{
-                    display: 'inline-block', margin: '8px 0', padding: '6px 16px',
+                    display: 'inline-block', margin: '4px 0', padding: '4px 12px',
                     background: '#F0F9FF', borderRadius: '20px',
-                    fontSize: '0.9rem', color: '#0369A1', fontWeight: '700'
+                    fontSize: '0.8rem', color: '#0369A1', fontWeight: '700'
                 }}>
                     {user?.studentType || 'Regular'} • {user?.rollNo || 'N/A'}
                 </div>
             </div>
 
-            <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-                <Card className="lw-slide-up lw-delay-200" style={{ marginBottom: '20px', padding: '24px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#374151' }}>Personal Information</h3>
-                        <Button variant="ghost" className="lw-btn-hover" style={{ padding: '8px' }}><Edit2 size={18} /></Button>
+            <div style={{ padding: '16px', maxWidth: '600px', margin: '0 auto' }}>
+                <Card className="lw-slide-up lw-delay-200 lw-card-compact" style={{ marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#374151' }}>Personal Information</h3>
+                        <Button variant="ghost" className="lw-btn-hover" style={{ padding: '6px' }}><Edit2 size={16} /></Button>
                     </div>
 
                     <InfoRow icon={Mail} label="Email Address" value={user?.email || 'N/A'} />
@@ -61,8 +61,8 @@ const Profile = () => {
                 </Card>
 
                 <Button fullWidth variant="outline" icon={LogOut} onClick={() => {
-                    api.post('/auth/student/logout').then(() => window.location.href = '/login');
-                }} style={{ borderRadius: '14px', padding: '14px' }}>
+                    api.post('/auth/student/logout').then(() => window.location.href = '/');
+                }} style={{ borderRadius: '12px', padding: '12px', fontSize: '0.9rem' }}>
                     Sign Out
                 </Button>
             </div>
@@ -76,11 +76,11 @@ const InfoRow = ({ icon: Icon, label, value }) => (
         <div style={{
             width: '36px', height: '36px', borderRadius: '10px', background: 'var(--col-surface)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: '16px',
-            color: 'var(--col-text-muted)'
+            color: 'var(--col-text-muted)', flexShrink: 0
         }}>
             <Icon size={18} />
         </div>
-        <div>
+        <div className="info-row-text">
             <p style={{ fontSize: '0.8rem', color: 'var(--col-text-muted)' }}>{label}</p>
             <p style={{ fontWeight: '500', color: 'var(--col-text-main)' }}>{value}</p>
         </div>

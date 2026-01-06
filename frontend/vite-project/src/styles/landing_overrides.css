@@ -7,8 +7,64 @@
     transform: scale(1.02) rotateY(0deg) rotateX(0deg) !important;
 }
 
-@media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+    /* Navbar is now a centered pill handled in-JSX */
+
+    .landing-hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+        padding-top: 100px !important;
+        text-align: center;
+        padding-bottom: 40px !important;
+    }
+
+    .landing-hero-grid h1 {
+        font-size: 3.5rem !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .landing-hero-grid br {
+        display: none;
+    }
+
+    .landing-hero-grid p {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        font-size: 1.1rem !important;
+    }
+
+    .landing-hero-grid .lw-btn-group {
+        justify-content: center;
+    }
+
+    .landing-hero-mockup {
+        transform: none !important;
+        margin-top: 20px;
+    }
+
+    .landing-section-row {
+        flex-direction: column !important;
+        gap: 40px !important;
+        padding: 40px 20px !important;
+    }
+
+    .landing-section-row h2 {
+        font-size: 2.5rem !important;
+        text-align: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .landing-hero-grid h1 {
+        font-size: 2.5rem !important;
+    }
+
+    .landing-hero-grid p {
+        font-size: 1rem !important;
+    }
+
+    .landing-section-row h2 {
+        font-size: 2.2rem !important;
     }
 }

@@ -29,19 +29,23 @@ const Landing = () => {
         <div style={{ fontFamily: 'var(--font-family)', background: '#FAF9F6', overflowX: 'hidden' }}>
 
             {/* Navbar */}
-            <nav style={{
-                padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                position: 'fixed', top: 0, width: '100%', zIndex: 100, background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)'
+            <nav className="landing-nav" style={{
+                padding: '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                position: 'fixed', top: '20px', left: '0', right: '0', margin: '0 auto',
+                width: '90%', maxWidth: '1000px', zIndex: 100,
+                background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(15px)',
+                borderRadius: '40px', boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
+                border: '1px solid rgba(255,255,255,0.5)'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{ background: 'var(--col-primary)', padding: '6px', borderRadius: '8px', color: 'white' }}>
                         <ChefHat size={20} />
                     </div>
-                    <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#333' }}>SmartMess</span>
+                    <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#333' }} className="lw-mobile-hide">SmartMess</span>
                 </div>
-                <div>
-                    <Button variant="ghost" className="lw-shimmer-hover" onClick={() => navigate('/login')}>Login</Button>
-                    <Button variant="primary" onClick={() => navigate('/register')}>Get Started</Button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>Login</Button>
+                    <Button variant="primary" size="sm" onClick={() => navigate('/register')}>Get Started</Button>
                 </div>
             </nav>
 
@@ -51,7 +55,7 @@ const Landing = () => {
                 padding: '140px 20px 80px', position: 'relative',
                 background: 'linear-gradient(135deg, #FFF0F5 0%, #ffe5ea 100%)'
             }}>
-                <div style={{ maxWidth: '1280px', width: '100%', display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: '80px', alignItems: 'center' }}>
+                <div className="landing-hero-grid" style={{ maxWidth: '1280px', width: '100%', display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: '80px', alignItems: 'center' }}>
 
                     {/* Left: Text */}
                     <div className="lw-slide-up" style={{ zIndex: 2 }}>
@@ -72,7 +76,7 @@ const Landing = () => {
                         <p style={{ fontSize: '1.35rem', color: '#555', marginBottom: '40px', lineHeight: '1.6', maxWidth: '550px', fontWeight: '500' }}>
                             Stop carrying cash and coupons. Keep track of your meals, attendance, and menu in seconds.
                         </p>
-                        <div style={{ display: 'flex', gap: '16px' }}>
+                        <div className="lw-btn-group" style={{ display: 'flex', gap: '16px' }}>
                             <Button variant="primary" style={{ padding: '16px 36px', fontSize: '1.1rem', borderRadius: '40px' }} onClick={() => navigate('/register')}>
                                 Get Started
                             </Button>
@@ -93,7 +97,7 @@ const Landing = () => {
                                 transform: 'perspective(1000px) rotateY(-5deg) rotateX(2deg)',
                                 transition: 'transform 0.5s ease'
                             }}
-                            className="hero-mockup"
+                            className="hero-mockup landing-hero-mockup"
                         />
 
                         {/* Decorative Blob */}
@@ -129,7 +133,7 @@ const Landing = () => {
 
             {/* SECTION 3: PROBLEM SOLUTION */}
             <section style={{ padding: '120px 20px', background: '#fff' }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '80px', alignItems: 'center' }}>
+                <div className="landing-section-row" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '80px', alignItems: 'center' }}>
                     <div style={{ flex: 1 }}>
                         <h2 className="animate-on-scroll lw-slide-up" style={{ fontSize: '3rem', marginBottom: '40px', lineHeight: '1.1', fontWeight: '800' }}>
                             From Mess Chaos to <span style={{ color: 'var(--col-primary)' }}>Clarity.</span>
