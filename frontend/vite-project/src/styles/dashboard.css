@@ -1,0 +1,178 @@
+/* Dashboard specific styles */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card Common Style */
+.bento-card {
+    background: white;
+    border-radius: 32px;
+    padding: 32px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Today's Meals Section */
+.meals-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.meal-status-card {
+    padding: 24px;
+    border-radius: 24px;
+    /* More rounded */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 170px;
+}
+
+/* Specific pastel colors from image */
+.meal-card-breakfast {
+    background: #E9F5E1;
+}
+
+/* Greenish */
+.meal-card-lunch {
+    background: #E1F1F8;
+}
+
+/* Bluish */
+.meal-card-dinner {
+    background: #FBEAEA;
+}
+
+/* Reddish */
+
+.meal-badge {
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 10px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.badge-breakfast {
+    background: #9CCC65;
+}
+
+.badge-lunch {
+    background: #64B5F6;
+}
+
+.badge-dinner {
+    background: #E57373;
+}
+
+/* Menu Pills */
+.menu-pill {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: white;
+    border: 1px solid #f5f5f5;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s;
+}
+
+.menu-pill:hover {
+    transform: translateX(5px);
+    border-color: #eee;
+}
+
+/* Attendance Widget (Right Side Large Card) */
+.attendance-full-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.attendance-progress-row {
+    margin-bottom: 16px;
+}
+
+.progress-track {
+    height: 10px;
+    background: #f1f2f4;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-thumb {
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* Circular Chart Overlay */
+.circular-chart {
+    position: relative;
+    /* Fixes overlay positioning */
+    display: inline-block;
+}
+
+.circular-chart-svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.chart-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    /* Ensure text centers properly */
+}
+
+/* Meal Voting */
+.vote-item {
+    margin-bottom: 20px;
+}
+
+/* Illustration Background */
+.dashboard-illustration-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}

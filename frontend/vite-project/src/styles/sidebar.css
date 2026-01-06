@@ -1,0 +1,83 @@
+/* Sidebar specific styles */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    /* Opening from right as per "3 dots" usually implies a menu, or left? User image shows left sidebar usually, but 3 dots are often right. Let's look at image 2. Image 2 shows a dropdown/modal-like menu. It looks like a floating card. */
+    /* User said "side bar open from that 3 dots". The 3 dots in Dashboard are on the Right. */
+    /* The Image 1 sidebar looks like a floating menu. */
+    /* I will position it absolute/fixed relative to the trigger if possible, or just fixed right/center. */
+    /* Actually the image shows a standalone card "Profile, Community...". It looks like a popup menu more than a full sidebar. */
+    /* But the user called it "Sidebar" and gave code for "Sidebar". I will style it as a Sidebar but maybe floating. */
+
+    width: 280px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-content {
+    padding: 10px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #555;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.sidebar-item:hover {
+    background: #FFF0F5;
+    /* Pinkish hover */
+    color: var(--col-primary);
+    transform: translateX(4px);
+}
+
+.sidebar-item-active {
+    background: #FFF0F5;
+    color: var(--col-primary);
+    font-weight: 600;
+}
+
+.sidebar-separator {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 8px 0;
+}

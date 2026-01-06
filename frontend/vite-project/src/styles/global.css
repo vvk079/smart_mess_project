@@ -1,28 +1,113 @@
+/* SmartMess Global Styles */
 :root {
-  --bg-start: #feccb1;
-  --bg-end: #ef842c;
+  /* Primary Colors */
+  --col-primary: #FFB7C5;
+  /* Light Pink / Blush Pink */
+  --col-primary-dark: #FFC0CB;
+  --col-primary-light: #FFDEE5;
 
-  --card-bg: #fdc5c5;
+  /* Secondary Colors */
+  --col-secondary: #FFE5B4;
+  /* Soft Peach */
+  --col-lavender: #E6E6FA;
+  /* Pastel Lavender */
 
-  --primary: #ff9f68;
-  --primary-dark: #f28c52;
+  /* Backgrounds */
+  --col-bg: #FAF9F6;
+  /* Off-White / Very Light Cream */
+  --col-card-bg: #FFFFFF;
+  --col-surface: #FDFBF7;
 
-  --text-dark: #1f2937;
-  --text-light: #6b7280;
+  /* Accents */
+  --col-success: #77DD77;
+  /* Pastel Green */
+  --col-warning: #FFB347;
+  /* Soft Orange */
+  --col-text-main: #4A4A4A;
+  /* Dark Grey for readability, softer than black */
+  --col-text-muted: #888888;
+  --col-border: #F0F0F0;
+
+  /* Spacing */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-xxl: 48px;
+
+  /* Radius */
+  --rad-sm: 8px;
+  --rad-md: 12px;
+  --rad-lg: 20px;
+  --rad-xl: 30px;
+  --rad-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 12px 32px rgba(255, 183, 197, 0.25);
+  /* Pinkish shadow */
+
+  /* Font */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* =========================
-   RESET
-========================= */
 * {
   box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", sans-serif;
-  
-  color: var(--text-dark);
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--col-bg);
+  color: var(--col-text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: #2D2D2D;
+}
+
+/* Scrollbar beautification */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--col-primary-light);
+  border-radius: var(--rad-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--col-primary);
 }

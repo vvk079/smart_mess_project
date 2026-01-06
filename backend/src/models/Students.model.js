@@ -13,17 +13,17 @@ const studentSchema = new mongoose.Schema({
 
   rollNo: {
     type: String,
-    required: true
+    required: false
   },
 
   course: {
     type: String,
-    required: true
+    required: false
   },
 
   batch: {
     type: String,
-    required: true
+    required: false
   },
 
   password: {
@@ -34,9 +34,9 @@ const studentSchema = new mongoose.Schema({
   studentType: {
     type: String,
     enum: ["Regular", "Hosteler"],
-    required: true
+    required: false
   }
-  
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("Student", studentSchema);

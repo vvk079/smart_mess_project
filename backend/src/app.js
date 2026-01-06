@@ -3,7 +3,9 @@ const cookieParser = require("cookie-parser");
 
 // ROUTES 
 const authRoutes = require("./routes/auth.route");
-const mealBookingRoutes = require("./routes/mealbooking.route");
+const mealBookingRoutes = require("./routes/mealbooking.routes");
+const userRoutes = require("./routes/user.route");
+const mealvoteRoutes = require("./routes/mealvote.routes");
 // (pendings)
 // const complaintRoutes = require("./routes/complaint.route");
 // const adminDashboardRoutes = require("./routes/admin.dashboard.route");
@@ -27,6 +29,8 @@ app.use("/api/auth", authRoutes);
 
 // Meal booking + attendance + cutoff + subscription
 app.use("/api/meal", mealBookingRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/vote", mealvoteRoutes);
 
 //  404 HANDLER 
 app.use((req, res) => {

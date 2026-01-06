@@ -8,26 +8,26 @@ const student = require('../models/Students.model.js')
 
 //controller
 const menuStudentController = require('../controller/student_login/menu.controller');
-const bookingController = require("../controller/student_login/booking.controller");
+const bookingController = require("../controller/student_login/mealbooking.controller");
 const attendanceStudentController = require("../controller/student_login/attendance.controller");
 
 
 
 // this require so that student can logged in for the interval of time 
-router.get("/profile",authStudentMiddleware, async (req,res)=>{
+router.get("/profile", authStudentMiddleware, async (req, res) => {
 
-    try{
+  try {
 
-        const {fullName,email,_id} = req.student
-        res.json({fullName,email,_id});
+    const { fullName, email, _id, rollNo, course, batch, studentType } = req.student
+    res.json({ fullName, email, _id, rollNo, course, batch, studentType });
 
-    }catch(err){
-        console.log(err)
-        res.status(500).json({
-            message:"server error"
-        })
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({
+      message: "server error"
+    })
 
-    }
+  }
 
 })
 
@@ -67,5 +67,5 @@ router.get(
 
 
 
-module.exports=router
+module.exports = router
 

@@ -9,7 +9,7 @@ const mealBookingController = require(
 );
 
 const attendanceController = require(
-  "../controller/attendance.controller"
+  "../controller/admin/attendance.controller"
 );
 
 const checkSubscription = require(

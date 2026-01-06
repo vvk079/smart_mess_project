@@ -1,0 +1,14 @@
+/* Landing specific overrides */
+.hero-mockup {
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-mockup:hover {
+    transform: scale(1.02) rotateY(0deg) rotateX(0deg) !important;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

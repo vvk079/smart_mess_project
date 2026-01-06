@@ -1,14 +1,27 @@
 const MealBooking = require("../../models/MealBooking.model");
 const DailyMenu = require("../../models/DailyMenu.model");
-const isBeforeCutoff = require("../../utils/cutoff.util");
+const isBeforeCutoff = require("../../utills/cutoff.util");
 
 async function bookMeal(req, res) {
   const { date, mealType } = req.body;
   const studentId = req.student._id;
 
+  // Check if already booked
+  const existingBooking = await MealBooking.findOne({
+    studentId,
+    date,
+    mealType
+  });
+
+  if (existingBooking) {
+    return res.status(400).json({
+      message: `You have already booked ${mealType} for ${date}`
+    });
+  }
+
   if (!isBeforeCutoff(mealType)) {
     return res.status(400).json({
-      message: "Booking cutoff time passed"
+      message: `Cutoff time for ${mealType} booking has passed`
     });
   }
 
@@ -20,7 +33,7 @@ async function bookMeal(req, res) {
 
   if (!menu) {
     return res.status(400).json({
-      message: "Menu not available"
+      message: `Menu not available for ${mealType} on ${date}`
     });
   }
 
@@ -36,36 +49,26 @@ async function bookMeal(req, res) {
   });
 }
 
+// Cancellation is disabled as per user request
 async function cancelMeal(req, res) {
-  const { date, mealType } = req.body;
-  const studentId = req.student._id;
-
-  if (!isBeforeCutoff(mealType)) {
-    return res.status(400).json({
-      message: "Cancellation cutoff time passed"
-    });
-  }
-
-  const booking = await MealBooking.findOne({
-    studentId,
-    date,
-    mealType,
-    bookingStatus: "Booked"
-  });
-
-  if (!booking) {
-    return res.status(404).json({
-      message: "No active booking found"
-    });
-  }
-
-  booking.bookingStatus = "Cancelled";
-  await booking.save();
-
-  res.status(200).json({
-    message: "Meal cancelled"
+  return res.status(403).json({
+    message: "Cancellations are not allowed"
   });
 }
 
 
-module.exports = { bookMeal,cancelMeal };
+async function viewMyBookings(req, res) {
+  const studentId = req.student._id;
+
+  const bookings = await MealBooking.find({
+    studentId,
+    bookingStatus: "Booked"
+  }).sort({ date: -1 });
+
+  res.status(200).json({
+    bookings
+  });
+}
+
+
+module.exports = { bookMeal, cancelMeal, viewMyBookings };

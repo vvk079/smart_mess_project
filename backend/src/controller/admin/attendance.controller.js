@@ -1,4 +1,4 @@
-const MealBooking = require("../models/MealBooking.model");
+const MealBooking = require("../../models/MealBooking.model");
 
 async function confirmMealConsumed(req, res) {
   const { bookingId } = req.body;
@@ -20,6 +20,7 @@ async function confirmMealConsumed(req, res) {
   });
 }
 
-module.exports = { confirmMealConsumed ,
-                   
+module.exports = {
+  confirmMealConsumed,
+
 };

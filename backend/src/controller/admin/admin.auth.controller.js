@@ -1,45 +1,40 @@
 const adminModel = require('../../models/admin.model')
-const jwt= require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 
-async function registerAdmin(req,res){
+async function registerAdmin(req, res) {
 
-    let{
-        fullName,email,
-        password:hasded
-    } = req.body
+    let { fullName, email, password } = req.body;
 
-    const admin = await adminModel.findOne({
-        email
-    })
+    const admin = await adminModel.findOne({ email });
 
-    if(admin){
+    if (admin) {
         return res.status(400).json({
-            message:"user is already existed"
-        })
+            message: "user is already existed"
+        });
     }
 
-    const password = bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user =await adminModel.create({
+    const user = await adminModel.create({
         fullName,
         email,
-        password:hasded
-    })
+        password: hashedPassword
+    });
 
     const token = jwt.sign(
-        {id:user._id},
+        { id: user._id },
         process.env.JWT_SECRET,
-        {expiresIn:"7d"}
+        { expiresIn: "7d" }
     )
 
-    res.cookie("token",token,{
-        httpOnly:true
+    res.cookie("token", token, {
+        httpOnly: true
     })
 
     return res.status(201).json({
-        message:"admin is created"
+        message: "admin is created"
     })
 
 
@@ -49,46 +44,44 @@ async function registerAdmin(req,res){
 }
 
 
-async function loginadmin(req,res){
+async function loginadmin(req, res) {
 
-    let{email,password}=req.body
+    let { email, password } = req.body
 
-    const admin = adminModel.findOne({
-        email
-    })
+    const admin = await adminModel.findOne({ email });
 
-    if(!admin){
+    if (!admin) {
         return res.status(501).json({
-            message:"user not existed"
-        })
+            message: "user not existed"
+        });
     }
 
-    if(!adminModel.password){
+    if (!admin.password) {
         return res.status(502).json({
-            message:"password is not stored in database"
-        })
+            message: "password is not stored in database"
+        });
     }
 
-    const ispasswordvalid = bcrypt.compare(password,adminModel.password)
+    const ispasswordvalid = await bcrypt.compare(password, admin.password);
 
-    if(!ispasswordvalid){
-        return res.status(500).json({
-            Message:"invalid password"
-        })
+    if (!ispasswordvalid) {
+        return res.status(400).json({
+            message: "invalid password"
+        });
     }
 
     const token = jwt.sign(
-        {id:user._id},
+        { id: admin._id },
         process.env.JWT_SECRET,
-        {expiresIn:"7d"}
-    )
+        { expiresIn: "7d" }
+    );
 
-    res.cookie("token",token,{
-        httpOnly:true
+    res.cookie("token", token, {
+        httpOnly: true
     })
 
     return res.status(201).json({
-        message:"login succesfully"
+        message: "login succesfully"
     })
 }
 
@@ -103,7 +96,7 @@ async function logoutadmin(req, res) {
 }
 
 
-module.exports={
+module.exports = {
     registerAdmin,
     loginadmin,
     logoutadmin,
