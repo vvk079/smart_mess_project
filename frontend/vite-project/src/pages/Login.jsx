@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import Card from '../components/Card';
 import '../styles/lightswind.css';
-import api from '../lib/api';
+import api from '../api/axios';
 
 const Login = () => {
     const navigate = useNavigate();

@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import { SidebarProvider, useSidebar, SidebarContainer, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarSeparator } from '../components/Sidebar';
 import '../styles/lightswind.css';
-import api from '../lib/api';
+import api from '../api/axios';
 
 const PaymentContent = () => {
     const [status, setStatus] = useState('Pending');

@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import { SidebarProvider, useSidebar, SidebarContainer, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarSeparator } from '../components/Sidebar';
 import '../styles/lightswind.css';
 import '../styles/dashboard.css';
-import api from '../lib/api';
+import api from '../api/axios';
 
 // Wrapper component to provide context
 const DashboardWrapper = () => (

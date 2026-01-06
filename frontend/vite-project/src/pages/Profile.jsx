@@ -4,7 +4,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import '../styles/lightswind.css';
-import api from '../lib/api';
+import api from '../api/axios';
 
 const Profile = () => {
     const [user, setUser] = React.useState(null);
