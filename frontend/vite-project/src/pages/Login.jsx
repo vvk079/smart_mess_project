@@ -16,6 +16,17 @@ const Login = () => {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showWakingUp, setShowWakingUp] = useState(false);
+
+    React.useEffect(() => {
+        let timer;
+        if (loading) {
+            timer = setTimeout(() => setShowWakingUp(true), 3000);
+        } else {
+            setShowWakingUp(false);
+        }
+        return () => clearTimeout(timer);
+    }, [loading]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -160,6 +171,12 @@ const Login = () => {
                     <Button fullWidth type="submit" disabled={loading} style={{ padding: '16px', fontSize: '1.1rem', borderRadius: '16px' }}>
                         {loading ? 'Signing In...' : 'Sign In'} <ArrowRight size={20} />
                     </Button>
+
+                    {showWakingUp && (
+                        <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#666', textAlign: 'center' }} className="lw-fade-in">
+                            The server is waking up, please wait (this can take up to 30-60s on first load)...
+                        </p>
+                    )}
                 </form>
 
                 <div style={{ textAlign: 'center', marginTop: '32px', fontSize: '1rem', color: '#666' }}>

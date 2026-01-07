@@ -18,7 +18,19 @@ import Profile from "./pages/Profile";
 import AdminDashboard from './pages/AdminDashboard';
 import Payment from './pages/Payment';
 
+import api from './api/axios';
+
 function App() {
+  React.useEffect(() => {
+    // Warm up the backend server (especially for Render free tier cold starts)
+    const wakeUp = () => api.get('/').catch(() => { });
+    wakeUp();
+
+    // Periodically ping to keep it alive while the window is open (every 10 minutes)
+    const interval = setInterval(wakeUp, 10 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
