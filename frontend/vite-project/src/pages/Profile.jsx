@@ -1,5 +1,6 @@
 import React from 'react';
 import { User, Mail, Phone, Home, LogOut, Edit2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
@@ -8,6 +9,8 @@ import api from '../api/axios';
 
 const Profile = () => {
     const [user, setUser] = React.useState(null);
+    const location = useLocation();
+    const isDemo = location.pathname.startsWith('/demo');
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -21,8 +24,21 @@ const Profile = () => {
                 setLoading(false);
             }
         };
-        fetchProfile();
-    }, []);
+
+        if (isDemo) {
+            setUser({
+                fullName: 'Demo Student',
+                email: 'demo@smartmess.com',
+                studentType: 'Regular',
+                rollNo: '2026-DEMO-01',
+                course: 'Computer Science',
+                batch: '2022-2026'
+            });
+            setLoading(false);
+        } else {
+            fetchProfile();
+        }
+    }, [isDemo]);
 
     if (loading) {
         return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
@@ -61,12 +77,12 @@ const Profile = () => {
                 </Card>
 
                 <Button fullWidth variant="outline" icon={LogOut} onClick={() => {
-                    api.post('/auth/student/logout').then(() => window.location.href = '/');
+                    api.post('/auth/student/logout').finally(() => window.location.href = '/login');
                 }} style={{ borderRadius: '12px', padding: '12px', fontSize: '0.9rem' }}>
                     Sign Out
                 </Button>
             </div>
-            <Navbar />
+            <Navbar isDemo={isDemo} />
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import confetti from 'canvas-confetti';
+import { useLocation } from 'react-router-dom';
 import { MoreHorizontal, User, Users, CreditCard, Settings, HelpCircle, MessageCircle, LogOut } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';
@@ -17,6 +18,8 @@ const DashboardWrapper = () => (
 
 const Dashboard = () => {
     const { setExpanded } = useSidebar();
+    const location = useLocation();
+    const isDemo = location.pathname.startsWith('/demo');
     const [user, setUser] = React.useState(null);
     const [bookings, setBookings] = React.useState([]);
     const [attendanceSummary, setAttendanceSummary] = React.useState({ Breakfast: 0, Lunch: 0, Dinner: 0, Total: 0 });
@@ -42,16 +45,35 @@ const Dashboard = () => {
             setAttendanceSummary(attendanceRes.data || { Breakfast: 0, Lunch: 0, Dinner: 0, Total: 0 });
         } catch (err) {
             console.error("Failed to fetch data", err);
+            // Redirect to login on 401/403
+            if (err.response?.status === 401 || err.response?.status === 403) {
+                window.location.href = '/login';
+            }
         } finally {
             setLoading(false);
         }
     };
 
     React.useEffect(() => {
-        fetchData();
-    }, []);
+        if (isDemo) {
+            // Set mock data for demo mode
+            setUser({ fullName: 'Demo Student', email: 'demo@smartmess.com' });
+            setBookings([
+                { mealType: 'Breakfast', date: new Date().toISOString().split('T')[0], bookingStatus: 'Booked' },
+                { mealType: 'Dinner', date: new Date().toISOString().split('T')[0], bookingStatus: 'Booked' }
+            ]);
+            setAttendanceSummary({ Breakfast: 18, Lunch: 15, Dinner: 20, Total: 53 });
+            setLoading(false);
+        } else {
+            fetchData();
+        }
+    }, [isDemo]);
 
     const handleBook = async (mealType) => {
+        if (isDemo) {
+            alert("This is a demo! Meal booking is simulated.");
+            return;
+        }
         setBookingLoading(mealType);
         try {
             const today = new Date().toISOString().split('T')[0];
@@ -70,6 +92,11 @@ const Dashboard = () => {
     };
 
     const handleVote = async (mealOption) => {
+        if (isDemo) {
+            alert("This is a demo! Voting is simulated.");
+            setMyVote(mealOption);
+            return;
+        }
         if (myVote) return;
         setVotingLoading(true);
         try {
@@ -133,7 +160,7 @@ const Dashboard = () => {
                     <SidebarMenuItem icon={HelpCircle}>Help Center</SidebarMenuItem>
                     <SidebarMenuItem icon={MessageCircle}>Live Chat</SidebarMenuItem>
                     <SidebarMenuItem icon={LogOut} onClick={() => {
-                        api.post('/auth/student/logout').then(() => window.location.href = '/');
+                        api.post('/auth/student/logout').finally(() => window.location.href = '/login');
                     }}>Sign Out</SidebarMenuItem>
                 </SidebarMenu>
             </SidebarContainer>
@@ -283,7 +310,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <Navbar isDemo={!user} />
+            <Navbar isDemo={isDemo} />
         </div>
     );
 };

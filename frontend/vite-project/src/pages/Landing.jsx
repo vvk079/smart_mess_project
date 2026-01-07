@@ -80,7 +80,7 @@ const Landing = () => {
                             <Button variant="primary" style={{ padding: '16px 36px', fontSize: '1.1rem', borderRadius: '40px' }} onClick={() => navigate('/register')}>
                                 Get Started
                             </Button>
-                            <Button variant="outline" className="lw-shimmer" style={{ padding: '16px 36px', fontSize: '1.1rem', borderRadius: '40px', background: 'white', border: '1px solid #eee' }} onClick={() => navigate('/dashboard')}>
+                            <Button variant="outline" className="lw-shimmer" style={{ padding: '16px 36px', fontSize: '1.1rem', borderRadius: '40px', background: 'white', border: '1px solid #eee' }} onClick={() => navigate('/demo')}>
                                 View Demo
                             </Button>
                         </div>

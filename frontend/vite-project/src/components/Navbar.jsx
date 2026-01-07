@@ -6,6 +6,7 @@ import '../styles/lightswind.css';
 const Navbar = ({ isDemo = false }) => {
   const location = useLocation();
   const path = location.pathname;
+  const isDemoMode = isDemo || path.startsWith('/demo');
 
   if (path === '/login' || path === '/register') return null;
 
@@ -32,11 +33,12 @@ const Navbar = ({ isDemo = false }) => {
   };
 
   const NavItem = ({ to, icon: Icon }) => {
-    const isActive = path === to;
     const navigate = useNavigate();
+    const linkTo = isDemoMode ? (to === '/dashboard' ? '/demo' : `/demo${to}`) : to;
+    const isActive = path === linkTo;
 
     const handleClick = (e) => {
-      if (isDemo && to === '/payment') {
+      if (isDemoMode && to === '/payment') {
         e.preventDefault();
         navigate('/login');
       }
@@ -44,7 +46,7 @@ const Navbar = ({ isDemo = false }) => {
 
     return (
       <Link
-        to={to}
+        to={linkTo}
         onClick={handleClick}
         style={{
           display: 'flex',

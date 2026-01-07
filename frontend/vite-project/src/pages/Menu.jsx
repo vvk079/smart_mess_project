@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Leaf, Beef } from 'lucide-react'; // Beef as non-veg icon placeholder
 import Card from '../components/Card';
 import Badge from '../components/Badge';
@@ -7,6 +8,8 @@ import Button from '../components/Button';
 import '../styles/lightswind.css';
 
 const Menu = () => {
+    const location = useLocation();
+    const isDemo = location.pathname.startsWith('/demo');
     const [selectedDay, setSelectedDay] = useState('Today');
 
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -87,7 +90,7 @@ const Menu = () => {
                 ))}
             </div>
 
-            <Navbar />
+            <Navbar isDemo={isDemo} />
         </div>
     );
 };

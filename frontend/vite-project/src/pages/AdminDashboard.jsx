@@ -3,6 +3,7 @@ import { Users, Utensils, AlertCircle } from 'lucide-react';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import '../styles/lightswind.css';
+import api from '../api/axios';
 
 const AdminDashboard = () => {
     return (
@@ -13,7 +14,9 @@ const AdminDashboard = () => {
                     <h1 style={{ fontSize: '1.8rem', color: 'var(--col-text-main)' }}>Admin Panel</h1>
                     <p style={{ color: 'var(--col-text-muted)' }}>Manage your mess efficiently</p>
                 </div>
-                <Button variant="secondary" onClick={() => window.location.href = '/login'}>Logout</Button>
+                <Button variant="secondary" onClick={() => {
+                    api.post('/auth/admin/logout').finally(() => window.location.href = '/login');
+                }}>Logout</Button>
             </div>
 
             {/* Stats Grid */}

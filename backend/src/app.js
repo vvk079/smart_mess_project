@@ -1,5 +1,14 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://mysmartmess.netlify.app"
+  ],
+  credentials: true
+}));
+
 
 // ROUTES 
 const authRoutes = require("./routes/auth.route");

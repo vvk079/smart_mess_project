@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Navbar from '../components/Navbar';
 import '../styles/lightswind.css';
 
 const Attendance = () => {
+    const location = useLocation();
+    const isDemo = location.pathname.startsWith('/demo');
     // Mock data for attendance
     // For new users, starting with empty attendance history
     const attendanceHistory = [];
@@ -46,7 +49,7 @@ const Attendance = () => {
                     </Card>
                 ))}
             </div>
-            <Navbar />
+            <Navbar isDemo={isDemo} />
         </div>
     );
 };
