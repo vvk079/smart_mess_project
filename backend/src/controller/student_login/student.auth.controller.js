@@ -49,7 +49,8 @@ async function registerstudent(req, res) {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
+            sameSite: 'none',
         });
 
         res.status(200).json({
@@ -93,7 +94,8 @@ async function loginStudent(req, res) {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
+            sameSite: 'none',
         });
 
         return res.status(200).json({

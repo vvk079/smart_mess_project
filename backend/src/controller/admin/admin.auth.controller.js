@@ -30,7 +30,9 @@ async function registerAdmin(req, res) {
     )
 
     res.cookie("token", token, {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
     })
 
     return res.status(201).json({
@@ -77,7 +79,9 @@ async function loginadmin(req, res) {
     );
 
     res.cookie("token", token, {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
     })
 
     return res.status(201).json({

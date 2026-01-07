@@ -1,6 +1,14 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
+const app = express();
+
+const authRoutes = require("./routes/auth.route");
+const mealBookingRoutes = require("./routes/mealbooking.routes");
+const userRoutes = require("./routes/user.route");
+const mealvoteRoutes = require("./routes/mealvote.routes");
+
 app.use(cors({
   origin: [
     "http://localhost:5173",
@@ -8,19 +16,6 @@ app.use(cors({
   ],
   credentials: true
 }));
-
-
-// ROUTES 
-const authRoutes = require("./routes/auth.route");
-const mealBookingRoutes = require("./routes/mealbooking.routes");
-const userRoutes = require("./routes/user.route");
-const mealvoteRoutes = require("./routes/mealvote.routes");
-// (pendings)
-// const complaintRoutes = require("./routes/complaint.route");
-// const adminDashboardRoutes = require("./routes/admin.dashboard.route");
-// for feedback, complaint also
-
-const app = express();
 
 //  GLOBAL MIDDLEWARES 
 app.use(express.json());
